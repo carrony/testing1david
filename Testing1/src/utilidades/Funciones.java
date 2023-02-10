@@ -1,13 +1,13 @@
 package utilidades;
 
-import excepciones.AnioDebeSerPositivoException;
+import excepciones.DebeSerPositivoException;
 
 public class Funciones {
 
 	public static boolean esBisiesto(int anio) 
-			throws AnioDebeSerPositivoException {
+			throws DebeSerPositivoException {
 		if (anio<0) {
-			throw new AnioDebeSerPositivoException();
+			throw new DebeSerPositivoException();
 		}
 		
 		if (anio%4 !=0 ) {
@@ -20,9 +20,11 @@ public class Funciones {
 			}
 		}
 	}
-	public static String getDiagnostico(float imc) {
+	public static String getDiagnostico(float imc) 
+			throws DebeSerPositivoException {
 		String diagnostico="";
-		if (imc<18.5) {
+		if (imc<=0) throw new DebeSerPositivoException();
+		if (imc<=18.5) {
 			diagnostico="Bajo Peso";
 		} else if (imc<=24.9) {
 			diagnostico="Peso normal (saludable)";

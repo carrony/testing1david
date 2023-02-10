@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-import excepciones.AnioDebeSerPositivoException;
+import excepciones.DebeSerPositivoException;
 
 class FuncionesTest {
 
 	@Test
-	void testEsBisiesto() throws AnioDebeSerPositivoException {
+	void testEsBisiesto() throws DebeSerPositivoException {
 		assertFalse(Funciones.esBisiesto(2023), 
 				"El test ha fallado, 2023 no es bisiesto");
 		
@@ -31,8 +31,49 @@ class FuncionesTest {
 //					}
 //		});
 				
-		assertThrows(AnioDebeSerPositivoException.class, 
+		assertThrows(DebeSerPositivoException.class, 
 				()->Funciones.esBisiesto(-4));
 	}
 
+	@Test
+	void testGetDiagnostico() throws DebeSerPositivoException {
+		assertEquals("Bajo Peso", 
+				Funciones.getDiagnostico(10.2f),
+				"DEbería devolver el texto Bajo Peso");
+		assertEquals("Peso normal (saludable)", 
+				Funciones.getDiagnostico(20f),
+				"DEbería devolver el texto Peso normal (saludable)");
+		
+		assertEquals("Bajo Peso", 
+				Funciones.getDiagnostico(18.5f),
+				"DEbería devolver el texto Bajo Peso");
+		
+		assertEquals("Peso normal (saludable)", 
+				Funciones.getDiagnostico(24.9f),
+				"DEbería devolver el texto Peso normal (saludable)");
+		
+		assertEquals("Sobrepeso", 
+				Funciones.getDiagnostico(25f),
+				"DEbería devolver el texto 'Sobrepeso'");
+		assertEquals("Sobrepeso", 
+				Funciones.getDiagnostico(29.9f),
+				"DEbería devolver el texto 'Sobrepeso'");
+		assertEquals("Obesidad premórbida", 
+				Funciones.getDiagnostico(35f),
+				"DEbería devolver el texto 'Obesidad premórbida'");
+		assertEquals("Obesidad premórbida", 
+				Funciones.getDiagnostico(40f),
+				"DEbería devolver el texto 'Obesidad premórbida'");
+		assertEquals("Obesidad mórbida", 
+				Funciones.getDiagnostico(48f),
+				"DEbería devolver el texto 'Obesidad mórbida'");
+		
+		assertThrows(DebeSerPositivoException.class,
+				()->Funciones.getDiagnostico(-20f),
+				"debe lanzar una excepcion");
+		
+		
+	}
+	
+	
 }
